@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environments
+.venv/
+.conda-env/
+env/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Outputs
+outputs/
+logs/
+runs/
+
+# MLflow artifacts (optional to ignore if using remote tracking)
+mlruns/
+
+# System
+.DS_Store
+Thumbs.db
+
+# VSCode settings
+.vscode/
