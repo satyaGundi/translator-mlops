@@ -1,0 +1,21 @@
+# Core ML & Hugging Face
+torch>=2.1
+transformers>=4.40.0
+datasets>=2.19.0
+accelerate>=0.27.0
+
+# Experiment tracking & serving
+mlflow>=2.12.0
+pandas
+numpy
+scikit-learn
+
+# Evaluation
+sacrebleu
+
+# Monitoring (used in later weeks)
+evidently>=0.4.0
+
+# Optional serving API (for testing/teaching demos)
+fastapi
+uvicorn
