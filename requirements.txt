@@ -1,21 +1,21 @@
-# Core ML & Hugging Face
-torch>=2.1
-transformers>=4.40.0
-datasets>=2.19.0
-accelerate>=0.27.0
+# Minimal requirements for Translator MLOps Demo
 
-# Experiment tracking & serving
-mlflow>=2.12.0
+# Core HF stack
+torch           # replace with GPU wheel if needed
+transformers>=4.40
+datasets>=2.19
+accelerate>=0.27
+
+# Tracking / utils
+mlflow>=2.12
 pandas
 numpy
-scikit-learn
+PyYAML
 
 # Evaluation
 sacrebleu
 
-# Monitoring (used in later weeks)
-evidently>=0.4.0
-
-# Optional serving API (for testing/teaching demos)
+# Optional extras (uncomment if needed later)
+# evidently>=0.4    # drift/monitoring (Week 4)
 fastapi
 uvicorn
