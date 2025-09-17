@@ -11,11 +11,13 @@ venv/
 
 # Jupyter
 .ipynb_checkpoints/
+sandbox.ipynb
 
 # Outputs
 outputs/
 logs/
 runs/
+results/
 
 # MLflow artifacts (optional to ignore if using remote tracking)
 mlruns/

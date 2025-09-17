@@ -13,6 +13,7 @@ numpy
 PyYAML
 
 # Evaluation
+evaluate>=0.4
 sacrebleu
 
 # Optional extras (uncomment if needed later)
