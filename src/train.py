@@ -23,9 +23,9 @@ def main():
         mlflow.log_param("model_name", model_name)
 
         # Load dataset (tiny subset for speed)
-        full_ds = load_dataset("opus_books", "en-es", split="train[:2500]")
-        train_ds = full_ds.select(range(2000))
-        eval_ds = full_ds.select(range(2000, 2500))
+        full_ds = load_dataset("opus_books", "en-es", split="train[:500]")
+        train_ds = full_ds.select(range(200))
+        eval_ds = full_ds.select(range(200, 500))
 
         # Tokenizer
         tokenizer = AutoTokenizer.from_pretrained(model_name, from_safetensors=True)
@@ -67,7 +67,7 @@ def main():
             num_train_epochs=1,
             eval_strategy="epoch",
             logging_steps=20,
-            predict_with_generate=True,
+            # predict_with_generate=True,
             save_strategy="no"  # keep it light
         )
 
