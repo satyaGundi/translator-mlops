@@ -1,7 +1,7 @@
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import torch
 
-model_name = "./results/checkpoint-20"   # 👈 path to your trained checkpoint
+model_name = "./results/checkpoint-125"   # 👈 path to your trained checkpoint
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 

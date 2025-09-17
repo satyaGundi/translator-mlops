@@ -23,9 +23,9 @@ def main():
         mlflow.log_param("model_name", model_name)
 
         # Load dataset (tiny subset for speed)
-        full_ds = load_dataset("opus_books", "en-es", split="train[:500]")
-        train_ds = full_ds.select(range(200))
-        eval_ds = full_ds.select(range(200, 500))
+        full_ds = load_dataset("opus_books", "en-es", split="train[:2500]")
+        train_ds = full_ds.select(range(2000))
+        eval_ds = full_ds.select(range(2000, 2500))
 
         # Tokenizer
         tokenizer = AutoTokenizer.from_pretrained(model_name, from_safetensors=True)
@@ -51,25 +51,26 @@ def main():
         data_collator = DataCollatorForSeq2Seq(tokenizer, model=model)
         metric = evaluate.load("sacrebleu")
 
-        def compute_metrics(eval_pred):
-            preds, labels = eval_pred
-            preds = np.where(preds != -100, preds, tokenizer.pad_token_id)
-            decoded_preds = tokenizer.batch_decode(preds, skip_special_tokens=True)
-            labels = np.where(labels != -100, labels, tokenizer.pad_token_id)
-            decoded_labels = tokenizer.batch_decode(labels, skip_special_tokens=True)
-            decoded_labels = [[l] for l in decoded_labels]
-            return {"sacrebleu": metric.compute(predictions=decoded_preds, references=decoded_labels)["score"]}
-
+        # training_args = TrainingArguments(
+        #     output_dir="outputs",
+        #     per_device_train_batch_size=8,
+        #     per_device_eval_batch_size=8,
+        #     num_train_epochs=1,
+        #     eval_strategy="epoch",
+        #     logging_steps=20,
+        # )
         training_args = TrainingArguments(
-            output_dir="outputs",
-            per_device_train_batch_size=8,
-            per_device_eval_batch_size=8,
+            output_dir="./results",
+            eval_strategy="steps",   # valid in 4.56.1
+            eval_steps=10,
+            save_steps=10,
+            per_device_train_batch_size=16,
+            per_device_eval_batch_size=16,
             num_train_epochs=1,
-            eval_strategy="epoch",
+            # max_steps=20,
             logging_steps=20,
-            # predict_with_generate=True,
-            save_strategy="no"  # keep it light
-        )
+        )        
+        
 
         trainer = Trainer(
             model=model,
@@ -78,7 +79,6 @@ def main():
             eval_dataset=eval_ds,
             tokenizer=tokenizer,
             data_collator=data_collator,
-            compute_metrics=compute_metrics
         )
 
         trainer.train()
